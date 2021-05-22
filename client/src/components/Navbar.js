@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme, AppBar, Toolbar, Button, Typography, Hidden, Drawer ,List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import {
+    makeStyles,
+    useTheme,
+    AppBar,
+    Toolbar,
+    Button,
+    Typography,
+    Hidden,
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Badge,
+} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 
-
-const drawerWidth = 220
+const drawerWidth = 180;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
         }),
     },
     appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
@@ -43,7 +55,9 @@ const useStyles = makeStyles((theme) => ({
         flexShrink: 0,
     },
     drawerPaper: {
+        backgroundColor: theme.palette.primary.light,
         width: drawerWidth,
+        overflowX: 'hidden',
     },
     drawerHeader: {
         display: 'flex',
@@ -55,9 +69,11 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
-        display: "flex",
+        // padding: theme.spacing(3),
+        display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         // align
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
@@ -72,42 +88,77 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginRight: 0,
     },
+    button: {
+        marginRight: '1rem',
+        paddingTop: '1em',
+        '&:hover': {
+            backgroundColor: theme.palette.primary.dark,
+        },
+    },
+    avatar: {
+        height: theme.spacing(2),
+        width: theme.spacing(2),
+    },
 }));
 
-
-const Navbar = ({children}) => {
-
+const Navbar = ({ children, setShow, open, setOpen }) => {
     const classes = useStyles();
-    const theme = useTheme() 
+    const theme = useTheme();
 
-    const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        if (window.innerWidth < 600) {
+            setOpen(true);
+            setShow(true)
+        } 
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        if (window.innerWidth < 600) {
+            setOpen(false);
+            setShow(false)
+        }
     };
+
 
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-            })}>
-                <Toolbar >
-                    <Typography variant="h6" className={classes.title}>
+            <AppBar
+                position='static'
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}>
+                <Toolbar>
+                    <Typography variant='h6' className={classes.title}>
                         Quick Shopper
                     </Typography>
                     <Hidden xsDown>
-                        <Button>Cart</Button>
-                        <Button>Shop</Button>
+                        <Button
+                            className={classes.button}
+                            href='/cart'
+                            startIcon={
+                                <Badge badgeContent={4} color='secondary'>
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            }>
+                            Cart
+                        </Button>
+                        <Button
+                            className={classes.button}
+                            href='/'
+                            startIcon={<StorefrontIcon />}>
+                            Shop
+                        </Button>
                     </Hidden>
                     <Hidden smUp>
-                        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen}
-                            className={clsx(open && classes.hide)} >
-                                <MenuIcon />
+                        <IconButton
+                            edge='start'
+                            color='inherit'
+                            aria-label='menu'
+                            onClick={handleDrawerOpen}
+                            className={clsx(open && classes.hide)}>
+                            <MenuIcon />
                         </IconButton>
                     </Hidden>
                 </Toolbar>
@@ -116,35 +167,45 @@ const Navbar = ({children}) => {
             <Hidden smUp>
                 <Drawer
                     className={classes.drawer}
-                    variant="persistent"
-                    anchor="right"
+                    variant='persistent'
+                    anchor='right'
                     open={open}
                     classes={{
                         paper: classes.drawerPaper,
-                    }}
-                >
+                    }}>
                     <div className={classes.drawerHeader}>
                         <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                            {theme.direction === 'rtl' ? (
+                                <ChevronLeftIcon />
+                            ) : (
+                                <ChevronRightIcon />
+                            )}
                         </IconButton>
                     </div>
-                    <List className={ classes.content}>
-                
-                            <ListItem button >
-                                <ListItemIcon></ListItemIcon>
-                                <ListItemText primary="Cart"/>
-                            </ListItem>
-                            <ListItem button >
-                                <ListItemIcon></ListItemIcon>
-                                <ListItemText primary="Shop"/>
-                            </ListItem>
-                
+                    <List className={classes.content}>
+                        <ListItem
+                            button
+                            component='a'
+                            href='/cart'
+                            alignItems='center'>
+                            <ListItemIcon>
+                                <Badge badgeContent={4} color='secondary'>
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            </ListItemIcon>
+                            <ListItemText primary='Cart' />
+                        </ListItem>
+                        <ListItem button component='a' href='/' alignItems='center'>
+                            <ListItemIcon>
+                                <StorefrontIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='Shop' />
+                        </ListItem>
                     </List>
-                
                 </Drawer>
             </Hidden>
         </div>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;
