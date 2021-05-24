@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const useStyles = makeStyles({
   wrap: {
     minHeight: "100vh",
-    height: "100%",
+    // height: "100%",
   }
 
 })
@@ -39,7 +39,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Paper className={classes.wrap}>
+        <Paper className={classes.wrap} variant="outlined">
           <Background show={show} setShow={setShow}></Background>
           <Navbar setShow={setShow} open={open} setOpen={setOpen}>
             <Switch>

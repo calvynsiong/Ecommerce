@@ -26,7 +26,8 @@ const drawerWidth = 180;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
+        // flexGrow: 1,
+        minHeight: "100vh"
     },
     appBar: {
         backgroundColor: theme.palette.primary.light,
@@ -110,7 +111,7 @@ const Navbar = ({ children, setShow, open, setOpen }) => {
         if (window.innerWidth < 600) {
             setOpen(true);
             setShow(true)
-        } 
+        }
     };
 
     const handleDrawerClose = () => {
@@ -123,7 +124,7 @@ const Navbar = ({ children, setShow, open, setOpen }) => {
 
 
     return (
-        <div className={classes.root}>
+        <>
             <AppBar
                 position='static'
                 className={clsx(classes.appBar, {
@@ -204,7 +205,7 @@ const Navbar = ({ children, setShow, open, setOpen }) => {
                     </List>
                 </Drawer>
             </Hidden>
-        </div>
+        </>
     );
 };
 
