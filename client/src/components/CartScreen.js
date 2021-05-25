@@ -32,6 +32,13 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: 'black',
             opacity: '0.7'
         }
+    },
+    empty: {
+        margin: "2em",
+        display: 'flex',
+        flexDirection: "column",
+        alignItems: "center"
+
     }
 }))
 
@@ -58,13 +65,13 @@ const CartScreen = () => {
                     </Typography>
 
                     {cartItems.length === 0 ? (
-                        <>
+                        < div className={classes.empty}>
                             <Typography variant='h4' color='initial'>
                                 {' '}
                                 Your cart is empty
                             </Typography>
                             <Link to={`/`}  >Go back to the products page</Link>
-                        </>
+                        </ div>
                     ) : (
                         cartItems.map(item => {
                             return (
@@ -84,12 +91,15 @@ const CartScreen = () => {
                             Checkout
                         </Typography>
                         <Typography variant='body1' color='initial'>
-                            Do you want to checkout with 0 items?
+
+                            {`Do you want to checkout with  ${cartItems.reduce((total, current) => {
+                                return (total += current.quantity)
+                            }, 0)} items`}
                         </Typography>
                         <Typography variant='body1' color='initial'>
                             {`Total: $ ${cartItems.reduce((total, current) => {
                                 return (total += current.price * current.quantity)
-                            }, 0)}`}
+                            }, 0).toFixed(2)}`}
                         </Typography>
                         <Button
                             variant='outlined'

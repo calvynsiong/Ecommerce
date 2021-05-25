@@ -22,6 +22,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 
+import { useSelector } from 'react-redux';
+
 const drawerWidth = 180;
 
 const useStyles = makeStyles((theme) => ({
@@ -105,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = ({ children, setShow, open, setOpen }) => {
     const classes = useStyles();
     const theme = useTheme();
+    const cart = useSelector(state => state.cart)
+    const { cartItems } = cart
+
 
 
     const handleDrawerOpen = () => {
@@ -121,7 +126,9 @@ const Navbar = ({ children, setShow, open, setOpen }) => {
         }
     };
 
-
+    const total = cartItems.reduce((total, current) => {
+        return (total += current.quantity)
+    }, 0)
 
     return (
         <>
@@ -139,7 +146,7 @@ const Navbar = ({ children, setShow, open, setOpen }) => {
                             className={classes.button}
                             href='/cart'
                             startIcon={
-                                <Badge badgeContent={4} color='secondary'>
+                                <Badge badgeContent={total} color='secondary'>
                                     <ShoppingCartIcon />
                                 </Badge>
                             }>
@@ -190,7 +197,7 @@ const Navbar = ({ children, setShow, open, setOpen }) => {
                             href='/cart'
                             alignItems='center'>
                             <ListItemIcon>
-                                <Badge badgeContent={4} color='secondary'>
+                                <Badge badgeContent={total} color='secondary'>
                                     <ShoppingCartIcon />
                                 </Badge>
                             </ListItemIcon>
