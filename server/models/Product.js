@@ -11,21 +11,21 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-        
+
     },
     countInStock: {
         type: Number,
         required: true
-        
+
     },
-    countInStock: {
+    imageUrl: {
         type: String,
         required: true
-        
+
     }
 
 })
 
-const Product = mongoose.model("product", productSchema) 
+const Product = mongoose.model("product", productSchema)
 
 module.exports = Product
