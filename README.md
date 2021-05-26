@@ -186,6 +186,7 @@ module.exports = router
 
 PORT = 5000
 MONGO_URI = ""
+NODE_ENV = development
 ==============================
 
 ### dependencies
@@ -230,3 +231,22 @@ node server/server.js
 "data:import": "node server/seederScript.js"
 
 },
+
+
+# Heroku Deployment 
+
+cd client && npm run build
+
+## Add to server.js
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "/client/build")));
+    
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send("API running");
+    });
+}
