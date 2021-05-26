@@ -4,6 +4,7 @@ const express = require('express');
 const app = express()
 const connectDB = require("./server/config/db")
 const productRoutes = require("./server/routes/productRoutes")
+const  cors = require('cors')
 
 
 
@@ -13,6 +14,7 @@ connectDB()
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
+app.use(cors())
 
 // ! Creating routes
 
