@@ -12,7 +12,7 @@ const getAllProducts = async (req, res) => {
         res.json(products);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: 'Server error occured' });
+        res.status(500).json({ message: 'Could not fetch products' });
     }
 };
 const getProductById = async (req, res) => {
@@ -26,7 +26,7 @@ const getProductById = async (req, res) => {
         res.json(product);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: 'Server error occured' });
+        res.status(500).json({ message: 'Could not fetch the proper product' });
     }
 };
 
