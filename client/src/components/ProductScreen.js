@@ -111,7 +111,7 @@ const ProductScreen = ({ match, history }) => {
                                                 </MenuItem>
                                             ))}
                                         </Select>
-                                        <FormHelperText>Select an amount</FormHelperText>
+                                        <FormHelperText >Select amount</FormHelperText>
                                     </FormControl>
                                 </span>
                             </Typography>
@@ -138,20 +138,29 @@ const useStyles = makeStyles(theme => ({
         maxWidth: '1400px',
         margin: '1em auto',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     ScreenLeft: {
         display: 'flex',
         padding: '1em',
         marginleft: '2em',
-        alignItems: 'center'
+        alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            "&>div>img ": {
+                width: "50%",
+                height: "50%",
+            }
+        }
     },
     leftImage: {
         width: '100%',
         height: '100%',
         minWidth: '200px',
         minHeight: '200px',
-        margin: '1em',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '1em auto',
         paddingRight: '1em'
     },
     leftInfo: {
@@ -190,7 +199,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         marginTop: theme.spacing(-2),
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(6),
         margin: theme.spacing(1),
         height: '.5em'
     },

@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
         }
     },
     checkout: {
-        margin: '3em auto'
+        margin: '3em auto',
+        minWidth: "80%",
     },
     button: {
         color: theme.palette.primary.dark,
@@ -66,7 +67,7 @@ const CartScreen = () => {
 
                     {cartItems.length === 0 ? (
                         < div className={classes.empty}>
-                            <Typography variant='h4' color='initial'>
+                            <Typography variant='h4' color='initial' align="center" gutterBottom >
                                 {' '}
                                 Your cart is empty
                             </Typography>
